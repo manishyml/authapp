@@ -5,8 +5,7 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "../reducers/index";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./app.root.saga";
-import Users from "../components/users";
-import Home from "../components/home";
+import Home from "../components/home/home";
 import history from "./app.history";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -20,7 +19,6 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <Route exact path="/users" component={Users} />
           <Route exact path="/" component={Home} />
         </Router>
       </Provider>
