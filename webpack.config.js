@@ -1,56 +1,107 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const path = require("path");
-
-module.exports = {
-  mode: "production",
-  entry: "./src/index.js",
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "main.bundle.js"
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { resolve, join } = require("path");
+const webpack = require("webpack");
+const moduleRules = [
+  {
+    // javascript
+    test: /\.(js|jsx)$/,
+    include: /src/,
+    use: {
+      loader: "babel-loader"
+    }
   },
-  module: {
-    rules: [
+  {
+    // css
+    test: /\.css$/,
+    use: [
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+        loader: "style-loader"
       },
       {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader"
-          }
-        ]
-      },
-      {
-        test: /\.(less)$/,
-        use: [
-          {
-            loader: "style-loader" // creates style nodes from JS strings
-          },
-          {
-            loader: "css-loader" // translates CSS into CommonJS
-          },
-          {
-            loader: "less-loader" // compiles Less to CSS
-          }
-        ]
+        loader: "css-loader"
       }
     ]
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: "./src/index.html"
-    })
-  ],
+  {
+    // less
+    test: /\.less$/,
+    exclude: /node_modules/,
+    use: [
+      {
+        loader: "style-loader",
+        options: {
+          injectType: "singletonStyleTag"
+        }
+      },
+      {
+        loader: "css-loader"
+      },
+      {
+        loader: "less-loader",
+        options: {
+          paths: [resolve(__dirname, "src")]
+        }
+      }
+    ]
+  },
+  {
+    // fonts
+    test: /\.(woff|woff2|eot|ttf|otf)$/,
+    exclude: /node_modules/,
+    use: [
+      {
+        loader: "file-loader",
+        options: {
+          name: "[path][name].[ext]",
+          outputPath: "app/fonts",
+          publicPath: "/app/fonts/",
+          sourceMap: true,
+          convertToAbsoluteUrls: true
+        }
+      }
+    ]
+  },
+  {
+    // images
+    test: /\.(png|svg|jpg|gif|ico)$/,
+    use: [
+      {
+        loader: "file-loader",
+        options: {
+          name: "[path][name].[ext]",
+          outputPath: "app/images",
+          publicPath: "/app/images/",
+          sourceMap: true,
+          convertToAbsoluteUrls: true
+        }
+      }
+    ]
+  }
+];
+const plugins = [
+  new webpack.HotModuleReplacementPlugin(),
+  new HtmlWebpackPlugin({
+    template: join(__dirname, "/src/index.html"),
+    filename: "./index.html"
+  })
+];
+module.exports = {
+  entry: resolve(__dirname + "/src/index.js"),
+  output: {
+    filename: "[name].js",
+    chunkFilename: "[name].chunk.js",
+    publicPath: "/",
+    path: join(__dirname, "/dist/")
+  },
+  mode: "development",
+  module: { rules: moduleRules },
+  plugins,
+  devtool: "no-source-map",
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
+    hot: true,
     compress: true,
-    port: 8080,
-    historyApiFallback: true
-    //host: '172.16.1.133'
+    historyApiFallback: true,
+    port: 8082,
+    contentBase: join(__dirname, "/dist")
   }
 };

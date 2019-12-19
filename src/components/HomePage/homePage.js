@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SearchBar from "../Search/search";
+import Loader from "../Loader/loader";
+import MovieCard from "../MovieCard/movieCard";
 import ACTIONS from "../../constants/action-types";
 import STRINGS from "../../constants/strings";
-import "./home.styles.less";
+import "./homePage.less";
 
 class Home extends Component {
   state = {
@@ -23,12 +25,9 @@ class Home extends Component {
   render() {
     return (
       <div className="home_parent">
-        <div className="placeholder-text">{STRINGS.HOME.LOOKING_TEXT}</div>
-        <SearchBar
-          onChangeHandler={this.handleSearch}
-          placeholder="Enter Place"
-        />
-        <div onClick={this.searchPlace}>Explore</div>
+        <div className="searchbar_parent">
+          <Loader />
+        </div>
       </div>
     );
   }

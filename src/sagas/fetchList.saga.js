@@ -6,8 +6,10 @@ const client_id = "524PR0P3MTDBVP2STYZ5UFHGSBQ5UW2GWDZUAKMPX13Z1WOB";
 const client_secret = "KJV1BW0BIG5G1NCTBULEXTIZJ4NSL4OBFTIEUSLMSQLHQAIZ";
 const v = "20190425";
 
+function* fetchCategories(action) {}
+
 function* fetchToDoList(action) {
-  const URL = APIURL.explore;
+  const URL = APIURL.trending;
   const params = {
     client_id,
     client_secret,
@@ -22,4 +24,4 @@ function* fetchToDoList(action) {
   console.log({ result });
 }
 
-export { fetchToDoList };
+export { fetchToDoList, fetchCategories };
