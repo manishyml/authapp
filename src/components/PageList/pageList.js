@@ -1,11 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Landing from "../HomePage/homePage";
+import Table from "../Table/Table";
 import ACTIONS from "../../constants/action-types";
 import "./pageList.less";
 
 class PageList extends Component {
-  state = {};
+  state = {
+    data: [
+      {
+        name: "Item",
+        inputType: "select"
+      },
+      {
+        name: "Material Fee",
+        inputType: "currency"
+      },
+      {
+        name: "Packing Fee",
+        inputType: "currency"
+      },
+      {
+        name: "Unpacking Fee",
+        inputType: "text"
+      }
+    ]
+  };
 
   componentDidMount() {
     this.props.getCategories();
@@ -13,7 +32,7 @@ class PageList extends Component {
   render() {
     return (
       <div className="pagelist_parent">
-        <Landing />
+        <Table content={this.state.data} />
       </div>
     );
   }
