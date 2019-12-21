@@ -1,2 +1,8 @@
-export const ADD_ARTICLE = "ADD_ARTICLE";
-export const LOAD_TODO_LIST = "LOAD_TODO_LIST";
+const ACTIONS = {
+  SEARCH: {
+    LOAD_VENUE_LIST: "LOAD_VENUE_LIST",
+    GET_CATEGORIES: "GET_CATEGORIES"
+  }
+};
+
+export default ACTIONS;

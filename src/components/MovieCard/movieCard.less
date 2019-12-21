@@ -1,0 +1,43 @@
+@import "../../styles/common.less";
+.movieCard_parent {
+  .movieCard {
+    position: relative;
+    width: 300px;
+    height: 173.41px;
+    background: #cd5c5c;
+    margin: 87px auto;
+    perspective: 500px;
+    &::before {
+      border-top: 87px solid black;
+      transition: all 3s ease-in-out;
+      position: absolute;
+      transform-origin: top;
+      transform: rotateX(0);
+    }
+    &:hover {
+      &::before {
+        transform: rotateX(180deg);
+      }
+    }
+    &::after {
+      border-bottom: 87px solid black;
+      transition: all 3s ease-in-out;
+      position: absolute;
+      bottom: 0;
+      transform-origin: bottom;
+      transform: rotateX(0);
+    }
+    &:hover {
+      &::after {
+        transform: rotateX(-180deg);
+      }
+    }
+  }
+  .movieCard::before,
+  .movieCard::after {
+    content: "";
+    position: absolute;
+    border-left: 150px solid black;
+    border-right: 150px solid black;
+  }
+}
