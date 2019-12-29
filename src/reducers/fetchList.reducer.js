@@ -1,12 +1,12 @@
 import ACTIONS from "../constants/action-types";
 const initialState = {
-  articles: [],
+  movies: [],
   testMsg: "TEst MESSAGE"
 };
 function fetchList(state = initialState, action) {
-  if (action.type === ACTIONS.SEARCH.ADD_ARTICLE) {
+  if (action.type === ACTIONS.SEARCH.SAVE_MOVIE_LIST) {
     let tempState = Object.assign({}, state);
-    tempState.articles.push(action.payload);
+    tempState.movies = [...action.data];
     return tempState;
   }
   return state;

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import SearchBar from "../Search/search";
-import Loader from "../Loader/loader";
-import MovieCard from "../MovieCard/movieCard";
+import MovieCard from "../MovieCardInfo/movieCardInfo";
 import ACTIONS from "../../constants/action-types";
 import STRINGS from "../../constants/strings";
 import "./homePage.less";
@@ -12,21 +10,18 @@ class Home extends Component {
     imageUrl: [],
     imageOfSubCategories: []
   };
-  handleSearch = e => {
-    this.setState({ query: e.target.value }, () => {
-      console.log(this.state.query);
-    });
-  };
-
-  searchPlace = () => {
-    this.props.fetchVenues(this.state.query);
-  };
+  componentDidMount() {
+    this.props.fetchTrendingMovies();
+  }
 
   render() {
+    const { movieList } = this.props;
     return (
       <div className="home_parent">
-        <div className="searchbar_parent">
-          <Loader />
+        <div className="movieList_parent">
+          {movieList.map((item, index) => (
+            <MovieCard data={item} key={index} />
+          ))}
         </div>
       </div>
     );
@@ -34,13 +29,13 @@ class Home extends Component {
 }
 const mapStateToProps = state => {
   return {
-    testMsg: state.fetchList.testMsg
+    movieList: state.fetchList.movies
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    fetchVenues: query => {
-      dispatch({ type: ACTIONS.SEARCH.LOAD_VENUE_LIST, data: query });
+    fetchTrendingMovies: () => {
+      dispatch({ type: ACTIONS.SEARCH.LOAD_VENUE_LIST });
     }
   };
 };

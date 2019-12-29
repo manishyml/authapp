@@ -12,7 +12,7 @@ class Table extends Component {
     console.log(index);
     const tempTableData = [...this.state.tableContent];
     // const temp = tempTableData.filter((item, index) => index !== indexToDelete);
-    tempTableData.splice(index, 1);
+    tempTableData.slice(index, index);
     this.setState({ tableContent: tempTableData });
   };
   onClickHandler = content => {

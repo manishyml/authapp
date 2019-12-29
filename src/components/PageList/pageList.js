@@ -1,38 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Table from "../Table/Table";
+import HomePage from "../HomePage/homePage";
 import ACTIONS from "../../constants/action-types";
 import "./pageList.less";
 
 class PageList extends Component {
-  state = {
-    data: [
-      {
-        name: "Item",
-        inputType: "select"
-      },
-      {
-        name: "Material Fee",
-        inputType: "currency"
-      },
-      {
-        name: "Packing Fee",
-        inputType: "currency"
-      },
-      {
-        name: "Unpacking Fee",
-        inputType: "text"
-      }
-    ]
-  };
-
   componentDidMount() {
     this.props.getCategories();
   }
   render() {
     return (
       <div className="pagelist_parent">
-        <Table content={this.state.data} />
+        <HomePage />
       </div>
     );
   }
